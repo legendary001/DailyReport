@@ -16,17 +16,17 @@ public class AccessJsonService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public JSONObject cityStatus(){
+    public JSONObject cityStatus(String day) {
         JSONObject jsonObject = new JSONObject();
 
-        String queryType = "SELECT city,count FROM access_city WHERE day = \"2017-03-22\" ORDER BY count DESC LIMIT 10;";
-        List<JSONObject> listType = jdbcTemplate.query(queryType, (resultSet,num) -> {
+        String queryType = "SELECT city,count FROM access_city WHERE day = '" + day + "' ORDER BY count DESC LIMIT 10;";
+        List<JSONObject> listType = jdbcTemplate.query(queryType, (resultSet, num) -> {
             JSONObject jsonObject1 = new JSONObject();
             jsonObject1.put("name", resultSet.getString("city"));
             jsonObject1.put("value", resultSet.getString("count"));
             return jsonObject1;
         });
-        jsonObject.put("type", listType);
+        jsonObject.put("result", listType);
         return jsonObject;
     }
 
