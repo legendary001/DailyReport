@@ -21,18 +21,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <!--<repositories>-->
-    <!--<repository>-->
-    <!--<id>repo.spring.io.milestone</id>-->
-    <!--<name>Spring Maven Milestone Repository</name>-->
-    <!--<url>https://repo.spring.io/libs-milestone</url>-->
-    <!--</repository>-->
-    <!--<repository>-->
-    <!--<id>JBoss</id>-->
-    <!--<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>-->
-    <!--</repository>-->
-    <!--</repositories>-->
-
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>

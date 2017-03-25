@@ -1,6 +1,6 @@
 package com.controller.json;
 
-import com.service.AccessJsonService;
+import com.service.AccessService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccessJsonController {
 
     @Autowired
-    private AccessJsonService service;
+    private AccessService service;
 
-//    @RequestMapping(value = "/")
-//    public String index(HttpServletRequest httpServletRequest, Model model) throws Exception{
-//        return "about";
-//    }
+
 
     @ResponseBody
     @RequestMapping(value = "/json/city")

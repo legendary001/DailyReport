@@ -11,7 +11,7 @@ import java.util.List;
  * Created by pc on 2017/3/23.
  */
 @Service
-public class AccessJsonService {
+public class AccessService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
