@@ -1,0 +1,51 @@
+2017-03-28 13:45:08.280 [main] INFO  com.Application -Starting Application on T-ZHANGSHANLIN1 with PID 16640 (E:\GitHub\DailyReport\target\classes started by chenjh5 in E:\GitHub\DailyReport)
+2017-03-28 13:45:08.290 [main] INFO  com.Application -No active profile set, falling back to default profiles: default
+2017-03-28 13:45:08.335 [main] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext -Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1587ca9: startup date [Tue Mar 28 13:45:08 CST 2017]; root of context hierarchy
+2017-03-28 13:45:09.926 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory -Overriding bean definition for bean 'beanNameViewResolver' with a different definition: replacing [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter; factoryMethodName=beanNameViewResolver; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.class]]
+2017-03-28 13:45:10.366 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker -Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [class org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$edd2cf8b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-03-28 13:45:10.873 [main] INFO  o.s.b.c.e.t.TomcatEmbeddedServletContainer -Tomcat initialized with port(s): 8067 (http)
+2017-03-28 13:45:10.889 [main] INFO  o.a.catalina.core.StandardService -Starting service Tomcat
+2017-03-28 13:45:10.889 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet Engine: Apache Tomcat/8.0.32
+2017-03-28 13:45:11.315 [localhost-startStop-1] INFO  org.apache.jasper.servlet.TldScanner -At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2017-03-28 13:45:11.333 [localhost-startStop-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring embedded WebApplicationContext
+2017-03-28 13:45:11.333 [localhost-startStop-1] INFO  o.s.web.context.ContextLoader -Root WebApplicationContext: initialization completed in 2998 ms
+2017-03-28 13:45:11.722 [localhost-startStop-1] INFO  o.s.b.c.e.ServletRegistrationBean -Mapping servlet: 'dispatcherServlet' to [/]
+2017-03-28 13:45:11.722 [localhost-startStop-1] INFO  o.s.b.c.e.FilterRegistrationBean -Mapping filter: 'characterEncodingFilter' to: [/*]
+2017-03-28 13:45:11.722 [localhost-startStop-1] INFO  o.s.b.c.e.FilterRegistrationBean -Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2017-03-28 13:45:11.722 [localhost-startStop-1] INFO  o.s.b.c.e.FilterRegistrationBean -Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2017-03-28 13:45:11.722 [localhost-startStop-1] INFO  o.s.b.c.e.FilterRegistrationBean -Mapping filter: 'requestContextFilter' to: [/*]
+2017-03-28 13:45:12.351 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean -Building JPA container EntityManagerFactory for persistence unit 'default'
+2017-03-28 13:45:12.353 [main] INFO  o.h.jpa.internal.util.LogHelper -HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2017-03-28 13:45:12.478 [main] INFO  org.hibernate.Version -HHH000412: Hibernate Core {4.3.11.Final}
+2017-03-28 13:45:12.478 [main] INFO  org.hibernate.cfg.Environment -HHH000206: hibernate.properties not found
+2017-03-28 13:45:12.478 [main] INFO  org.hibernate.cfg.Environment -HHH000021: Bytecode provider name : javassist
+2017-03-28 13:45:12.684 [main] INFO  o.h.annotations.common.Version -HCANN000001: Hibernate Commons Annotations {4.0.5.Final}
+2017-03-28 13:45:13.014 [main] INFO  org.hibernate.dialect.Dialect -HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2017-03-28 13:45:13.047 [main] INFO  o.h.h.i.a.ASTQueryTranslatorFactory -HHH000397: Using ASTQueryTranslatorFactory
+2017-03-28 13:45:13.122 [main] INFO  o.h.tool.hbm2ddl.SchemaUpdate -HHH000228: Running hbm2ddl schema update
+2017-03-28 13:45:13.122 [main] INFO  o.h.tool.hbm2ddl.SchemaUpdate -HHH000102: Fetching database metadata
+2017-03-28 13:45:13.124 [main] INFO  o.h.tool.hbm2ddl.SchemaUpdate -HHH000396: Updating schema
+2017-03-28 13:45:13.124 [main] INFO  o.h.tool.hbm2ddl.SchemaUpdate -HHH000232: Schema update complete
+2017-03-28 13:45:13.435 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter -Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1587ca9: startup date [Tue Mar 28 13:45:08 CST 2017]; root of context hierarchy
+2017-03-28 13:45:13.516 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/net]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getAccessNetJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.519 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/city]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getAccessCityJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.519 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/lastdoc]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getAccesslastdocJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.521 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/lastdocpull]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getAccessLastdocPullJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.521 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/total]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getAccessTotalJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.524 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/loadreason]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getResultLoadReasonJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.526 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/loadsource]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getResultLoadSourceJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.529 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/json/access/timeconsume]}" onto public net.sf.json.JSONObject com.controller.json.AccessJsonController.getTimeConsumeJson(java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.529 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/city]}" onto public java.lang.String com.controller.view.AccessController.cityStatus(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,java.lang.String) throws java.lang.Exception
+2017-03-28 13:45:13.534 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2017-03-28 13:45:13.534 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2017-03-28 13:45:13.570 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-03-28 13:45:13.572 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-03-28 13:45:13.644 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-03-28 13:45:13.814 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Registering beans for JMX exposure on startup
+2017-03-28 13:45:13.910 [main] INFO  o.s.b.c.e.t.TomcatEmbeddedServletContainer -Tomcat started on port(s): 8067 (http)
+2017-03-28 13:45:13.910 [main] INFO  com.Application -Started Application in 6.145 seconds (JVM running for 12.161)
+2017-03-28 13:45:21.545 [http-nio-8067-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] -Initializing Spring FrameworkServlet 'dispatcherServlet'
+2017-03-28 13:45:21.710 [http-nio-8067-exec-1] INFO  o.s.web.servlet.DispatcherServlet -FrameworkServlet 'dispatcherServlet': initialization started
+2017-03-28 13:45:21.743 [http-nio-8067-exec-1] INFO  o.s.web.servlet.DispatcherServlet -FrameworkServlet 'dispatcherServlet': initialization completed in 32 ms
