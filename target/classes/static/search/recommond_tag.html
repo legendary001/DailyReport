@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ZH-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/style.css" />
+
+
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="form-inline  m20">
+
+        <strong>Tag:</strong> <input type="text" name="tag" id="tag" class="form-control input-default" style="width:350px;" placeholder="" />&nbsp;&nbsp;
+        <strong id="totalNum"></strong>
+
+    </div>
+    <div class="table-responsive m20">
+        <table class="table table-bordered table-condensed table-hover" id="table"></table>
+    </div>
+
+    <div id="page" class= "pull-right" style="margin:20px auto;"></div>
+</div>
+<script>
+    $(function () {
+
+        $("#tag").keyup(function() {
+            var msgs = null;
+            var url = null;
+            var title = true;
+            var total = 0;
+            //分页
+            var pageData = [];
+            var data = null;
+            var head = '<thead><tr>';
+            var end = '</tbody>';
+            var count = 0;
+            var pageSize = 0;
+            var pageCount = 0;
+            //翻页标签
+            var previous = '<button id="previous" class="btn btn-primary" disabled="disabled" style="margin-right: 5px;">上一页</button>';
+            var next = '<button id="next" class="btn btn-primary">下一页</button>';
+            var pageLabelSize = 5;
+            //查询关键字
+            var keyword = $("#tag").val().trim();
+            $("#table").html('');
+            $("#page").html('');
+            $("#totalNum").text('');
+            url = '/headline/json/preload?tag=' + keyword;
+            $.get(encodeURI(url)).done(function (data) {
+                if (data != null && data.length > 2) {
+                    msgs = JSON.parse(data);
+                    for (var i in msgs) {
+                        total ++;
+                        if (title == true) {
+                            for (var key in msgs[0]) {
+                                head += "<td>" + key + "</td>";
+                            }
+                            head += "</tr></thead><tbody>";
+                            title = false;
+                        }
+                        data += "<tr>";
+                        for (var key in msgs[i]) {
+                            data += "<td>" + msgs[i][key] + "</td>";
+                        }
+                        data += "</tr>";
+                        pageData.push(data);
+                        data = '';
+                    }
+
+
+                    count = pageData.length;
+                    pageSize = 15;
+                    pageCount = Math.ceil(count / pageSize);
+
+                    var currentPage = 1;
+
+                    //添加翻页栏
+                    var pageLabelElem = [];
+
+
+                    for (var i = 1; i <= pageCount; i++) {
+                        pageLabelElem.push('<a href="#" style="margin-right: 5px;" class="btn btn-primary" selectPage="'+i+'" >'+i+'</a>');
+//                        pageN += '<a href="#" style="margin-right: 5px;" class="btn btn-primary" selectPage="'+i+'" >'+i+'</a>';
+
+                    }
+
+                    $("#page").html('');
+
+                    var pageLabel = '';
+                    if (pageLabelElem.length <= pageLabelSize) {
+                        for (var i = 0; i < pageLabelElem.length; i++) {
+                            pageLabel += pageLabelElem[i];
+                        }
+                        $('#page').append(pageLabel);
+                    } else {
+                        pageLabel += previous;
+                        for (var i = 0; i < pageLabelSize; i++) {
+                            pageLabel += pageLabelElem[i];
+                        }
+                        pageLabel += next;
+                        $('#page').append(pageLabel);
+                    }
+
+
+                    //添加表格
+
+                    $('#table').empty().append(head);
+                    for(var i =(currentPage-1)*pageSize; i< pageSize*currentPage; i++){
+                        $('#table').append(pageData[i]);
+                    }
+                    $('#table').append(end);
+
+                    $('a').click(function(){
+                        var selectPage=$(this).attr('selectPage');
+                        $('#table').html('');
+                        $('#table').append(head);
+                        for(i=(selectPage-1)*pageSize; i < pageSize*selectPage; i++){
+                            $('#table').append(pageData[i]);
+                        }
+                        $('#table').append(end);
+                    });
+                    //previous label
+                    $('#previous').click(function(){
+                        $("#next").attr('disabled', false);
+                        var pageLabels=$('a');
+
+                        for (var i = 0; i < pageLabels.length; i++) {
+                            var selectPage = parseInt(pageLabels.eq(i).attr('selectPage'));
+                            if ((selectPage - pageLabelSize) < 0) {
+                                $("#previous").attr('disabled', true);
+                                break;
+                            }
+
+                            pageLabels.eq(i).attr('selectPage', selectPage - pageLabelSize);
+                            pageLabels.eq(i).text(selectPage - pageLabelSize);
+                        }
+                    });
+
+                    //next label
+                    $('#next').click(function(){
+                        $("#previous").attr('disabled', false);
+                        var pageLabels=$('a');
+                        for (var i = 0; i < pageLabels.length; i++) {
+                            var selectPage = parseInt(pageLabels.eq(i).attr('selectPage'));
+                            if ((selectPage + pageLabelSize) > pageCount) {
+                                $("#next").attr('disabled', true);
+                                pageLabels.eq(i).attr('selectPage', selectPage + pageLabelSize);
+                                pageLabels.eq(i).text(selectPage + pageLabelSize);
+
+                            } else {
+                                pageLabels.eq(i).attr('selectPage', selectPage + pageLabelSize);
+                                pageLabels.eq(i).text(selectPage + pageLabelSize);
+                            }
+                        }
+                    });
+                }
+                $("#totalNum").text("共有" + count + '条 ' + pageCount + '页');
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

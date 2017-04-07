@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-datetimepicker.min.css" />
+
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/echarts.min.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+
+        #city_chart {
+            width: 900px;
+            height:600px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+<input size="16" type="text" readonly class="form_datetime m20">
+<div id="city_chart" class="form-inline definewidth m20"></div>
+
+<script type="text/javascript">
+    $(function(){
+        Date.prototype.format = function(fmt) {
+            var o = {
+                "M+" : this.getMonth()+1,                 //月份
+                "d+" : this.getDate(),                    //日
+                "h+" : this.getHours(),                   //小时
+                "m+" : this.getMinutes(),                 //分
+                "s+" : this.getSeconds(),                 //秒
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度
+                "S"  : this.getMilliseconds()             //毫秒
+            };
+            if(/(y+)/.test(fmt)) {
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            }
+            for(var k in o) {
+                if(new RegExp("("+ k +")").test(fmt)){
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+
+//            var date = "20170325";
+        var date = new Date().format("yyyyMMdd");
+
+        var myChart = echarts.init(document.getElementById('city_chart'));
+        getCitysByDate();
+
+        var datepic = $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView:'month',
+            language: 'zh-CN',
+            autoclose:true,
+            todayBtn: true,
+            endState: new Date()
+        });
+        $(".form_datetime").val(new Date().format("yyyy-MM-dd"));
+
+        datepic.on('changeDate', function (){
+            date = $(".form_datetime").val();
+            date = date.replace(/-/g,'');
+            getCitysByDate();
+        });
+        function getCitysByDate () {
+            var url = '/json/access/city?day=' + date;
+            var citys = null;
+            var names = new Array();
+            var values = new Array();
+//                myChart.showLoading();
+            $.get(url).done(function (data) {
+                citys = data.result;
+                for (var i = 0; i < citys.length; i++) {
+                    names[i] = citys[i].name;
+                    values[i] = citys[i].value;
+                }
+//                    myChart.hideLoading();
+                myChart.setOption({
+                    title: {
+                        text: '城市推送Top10'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['次数']
+                    },
+                    xAxis: {
+                        data: names
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '次数',
+                        type: 'bar',
+                        data: values
+                    }]
+                });
+            });
+        }
+    });
+
+
+</script>
+</body>
+</html>

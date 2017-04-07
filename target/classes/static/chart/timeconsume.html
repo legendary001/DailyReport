@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-datetimepicker.min.css" />
+
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/echarts.min.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap-datetimepicker.zh-CN.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+
+        #timeconsume_column_chart {
+            width: 1500px;
+            height:700px;
+        }
+        #weekend_line_chart {
+            width: 1200px;
+            height:400px;
+        }
+        #timeconsume_pie_chart {
+            width: 1200px;
+            height:600px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<input size="16" type="text"  readonly class="form_datetime m20">
+<div id="timeconsume_column_chart" class="form-inline definewidth m10"></div>
+<div id="weekend_line_chart" class="form-inline definewidth m10" style="display: none; background-color: #f0f0f0"></div>
+<div id="timeconsume_pie_chart" class="form-inline definewidth m10"></div>
+
+<script type="text/javascript">
+    $(function(){
+        Date.prototype.format = function(fmt) {
+            var o = {
+                "M+" : this.getMonth()+1,                 //月份
+                "d+" : this.getDate(),                    //日
+                "h+" : this.getHours(),                   //小时
+                "m+" : this.getMinutes(),                 //分
+                "s+" : this.getSeconds(),                 //秒
+                "q+" : Math.floor((this.getMonth()+3)/3), //季度
+                "S"  : this.getMilliseconds()             //毫秒
+            };
+            if(/(y+)/.test(fmt)) {
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            }
+            for(var k in o) {
+                if(new RegExp("("+ k +")").test(fmt)){
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+
+//            var date = "20170325";
+        var date = new Date().format("yyyyMMdd");
+
+        var timeconsumeColumnChart = echarts.init(document.getElementById('timeconsume_column_chart'));
+        var weekendLineChart = echarts.init(document.getElementById('weekend_line_chart'));
+        var timeconsumePieChart = echarts.init(document.getElementById('timeconsume_pie_chart'));
+        getTimeConsumeByDate();
+
+        var datepic = $(".form_datetime").datetimepicker({
+            format: 'yyyy-mm-dd',
+            minView:'month',
+            language: 'zh-CN',
+            autoclose:true,
+            todayBtn: true,
+            endState: new Date()
+        });
+
+        $(".form_datetime").val(new Date().format("yyyy-MM-dd"));
+
+        datepic.on('changeDate', function (){
+            date = $(".form_datetime").val();
+            date = date.replace(/-/g,'');
+            getTimeConsumeByDate();
+        });
+        function getTimeConsumeByDate () {
+            var url = '/json/access/timeconsume?day=' + date;
+            var sources = null;
+            var operations = new Array();
+            var values = new Array();
+            var pie = new Array();
+            $.get(url).done(function (data) {
+                sources = data.result;
+                for (var i = 0; i < sources.length; i++) {
+                    operations[i] = sources[i].operation;
+                    values[i] = sources[i].value;
+                    var msg = new Object();
+                    msg.name = operations[i];
+                    msg.value = sources[i].percent;
+                    pie[i] = msg;
+                }
+
+                timeconsumeColumnChart.setOption({
+                    title: {
+                        text: '流程处理各步骤统计'
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['耗时']
+                    },
+                    xAxis: {
+                        data: operations,
+                        axisLabel: {
+                            interval: 0,
+                            rotate: 20
+                        }
+                    },
+
+                    yAxis: {},
+
+                    series: [{
+                        name: '步骤总数',
+                        type: 'bar',
+                        data: values
+                    }]
+                });
+
+                timeconsumeColumnChart.on('click', function(param) {
+                    var trendUrl = '/json/access/timeconsume/weekend?operation=' + param.name + '&day=' + date;
+
+                    $.get(trendUrl).done(function (data) {
+                        var result = data.result;
+                        var title = result[0].operation;
+                        var weekend = [];
+                        var sum = [];
+                        for (var key in result) {
+                            for (var i in result[key]) {
+                                if (i == "day") {
+                                    weekend.push(result[key][i]);
+                                } else if (i == "percent") {
+                                    sum.push(result[key][i]);
+                                }
+                            }
+                        }
+                        $("#weekend_line_chart").css("display", "");
+
+                        weekendLineChart.setOption ({
+                            title: {
+                                text: title + '一周耗时占比趋势图'
+                            },
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    animation: false
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                data: weekend,
+                                splitLine: {
+                                    show: false
+                                }
+                            },
+                            yAxis: {
+                                type: 'value',
+                                boundaryGap: [0, '100%'],
+                                splitLine: {
+                                    show: false
+                                }
+                            },
+                            series: [{
+                                name: '耗时占比',
+                                type: 'line',
+                                showSymbol: false,
+                                hoverAnimation: false,
+                                data: sum
+                            }]
+                        });
+                    });
+
+                });
+
+                timeconsumePieChart.setOption({
+                    title : {
+                        text: '流程处理各步骤耗时占比',
+                        subtext: '',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: operations
+                    },
+                    series : [
+                        {
+                            name: '操作方式',
+                            type: 'pie',
+                            radius : '55%',
+                            center: ['50%', '60%'],
+                            data:pie,
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true,
+                                        formatter: '{b}:{d}%'
+                                    },
+                                    labelLine: {
+                                        show: true
+                                    }
+                                },
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
