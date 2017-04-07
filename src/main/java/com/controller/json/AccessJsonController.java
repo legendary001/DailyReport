@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class AccessJsonController {
-
     @Autowired
     private AccessService service;
 
@@ -58,14 +57,34 @@ public class AccessJsonController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/json/access/loadreason/weekend")
+    public JSONObject getResultLoadReasonWeekendJson(@RequestParam(value = "day", defaultValue = "20170324") String day, String operation) throws Exception{
+        return service.resultLoadReasonWeekendStatus(day, operation);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/json/access/loadsource")
     public JSONObject getResultLoadSourceJson(@RequestParam(value = "day", defaultValue = "20170324") String day) throws Exception{
         return service.resultLoadSourceStatus(day);
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/json/access/loadsource/weekend")
+    public JSONObject getResultLoadSourceWeekendJson(@RequestParam(value = "day", defaultValue = "20170324") String day, String operation) throws Exception{
+        return service.resultLoadSourceWeekendStatus(day, operation);
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "/json/access/timeconsume")
     public JSONObject getTimeConsumeJson(@RequestParam(value = "day", defaultValue = "20170324") String day) throws Exception{
         return service.timeConsumeStatus(day);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/json/access/timeconsume/weekend")
+    public JSONObject getTimeConsumeJson(@RequestParam(value = "day", defaultValue = "20170324") String day, String operation) throws Exception{
+        return service.timeConsumeWeekendStatus(day, operation);
     }
 }
